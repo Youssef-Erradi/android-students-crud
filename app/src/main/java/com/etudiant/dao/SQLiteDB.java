@@ -3,6 +3,7 @@ package com.etudiant.dao;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class SQLiteDB extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "etudiants.db";
@@ -20,7 +21,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
     public static final String COL_FILIERES_ID = "Id";
     public static final String COL_FILIERES_INTITULE = "intitule";
 
-    private static final String SQL_DELETE_TABLE_ETUDIANTS = "DROP TABLE IF EXISTS " + TABLE_ETUDIANTS;
+    private static final String SQL_DELETE_TABLE_ETUDIANTS = "DROP TABLE IF EXISTS " + TABLE_ETUDIANTS + ";";
     private static final String SQL_CREATE_TABLE_ETUDIANTS = "CREATE TABLE " +
             TABLE_ETUDIANTS + " ("
             + COL_ETUDIANTS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -28,13 +29,13 @@ public class SQLiteDB extends SQLiteOpenHelper {
             + COL_ETUDIANTS_PRENOM + " TEXT NOT NULL, "
             + COL_ETUDIANTS_PHOTO + " BLOB NOT NULL, "
             + COL_ETUDIANTS_VILLE + " TEXT NOT NULL,"
-            + COL_ETUDIANTS_FILIERE + "INTEGER NOT NULL,"
-            + "FOREIGN KEY ("+COL_ETUDIANTS_FILIERE+") REFERENCES "
-            + TABLE_FILIERES+" ( "+COL_FILIERES_ID+" ) ON DELETE CASCADE);";
+            + COL_ETUDIANTS_FILIERE + " INTEGER NOT NULL,"
+            + "FOREIGN KEY (" + COL_ETUDIANTS_FILIERE + ") REFERENCES "
+            + TABLE_FILIERES + " ( " + COL_FILIERES_ID + " ) ON DELETE CASCADE);";
 
-    private static final String SQL_DELETE_TABLE_FILIERES = "DROP TABLE IF EXISTS " + TABLE_FILIERES;
+    private static final String SQL_DELETE_TABLE_FILIERES = "DROP TABLE IF EXISTS " + TABLE_FILIERES + ";";
     private static final String SQL_CREATE_TABLE_FILIERES = "CREATE TABLE " +
-            TABLE_ETUDIANTS + " ("
+            TABLE_FILIERES + " ("
             + COL_FILIERES_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_FILIERES_INTITULE + " TEXT NOT NULL );";
 
@@ -46,7 +47,6 @@ public class SQLiteDB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_TABLE_FILIERES);
         db.execSQL(SQL_CREATE_TABLE_ETUDIANTS);
-
     }
 
     @Override
