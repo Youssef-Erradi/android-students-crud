@@ -48,9 +48,6 @@ public class Filiere implements Serializable {
 
     @Override
     public String toString() {
-        return "Filiere{" +
-                "id=" + id +
-                ", intitule='" + intitule + '\'' +
-                '}';
+        return id+" : "+intitule;
     }
 }
