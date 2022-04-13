@@ -29,12 +29,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-
-        btnAjouter.setOnClickListener(v -> ajouterFiliereDialog());
+        btnAjouter.setOnClickListener(v -> formDialog(null));
         listView.setOnItemLongClickListener((adapterView, view, pos, id) -> {
             Filiere filiere = adapter.getItem(pos);
-            supprimerFiliereDialog(filiere);
+            confirmDialog(filiere);
             return true;
+        });
+        listView.setOnItemClickListener((adapterView, view, pos, id) -> {
+            Filiere filiere = adapter.getItem(pos);
+            formDialog(filiere);
         });
     }
 
@@ -45,42 +48,47 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
-    private void ajouterFiliereDialog() {
+    private void formDialog(Filiere f) {
         EditText txtIntitule = new EditText(this);
         txtIntitule.setHint("Entrer l'intitulé de la Filière *");
-        AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setTitle("Formulaire d'ajout ")
+        if (f != null)
+            txtIntitule.setText(f.getIntitule());
+        new AlertDialog.Builder(this)
+                .setTitle("Formulaire")
                 .setView(txtIntitule)
                 .setNeutralButton("Annuler", (dialog, which) -> dialog.cancel())
-                .setPositiveButton("Ajouter", (dialog, which) -> {
+                .setPositiveButton("Valider", (dialog, which) -> {
                     String intitule = txtIntitule.getText().toString().trim();
                     if (intitule.isEmpty()) {
-                        showToast( "Remplissez le champ intitulé d'abord", Toast.LENGTH_SHORT);
+                        showToast("Remplissez le champ intitulé d'abord", Toast.LENGTH_SHORT);
                         return;
                     }
-                    Filiere filiere = new Filiere(null, intitule);
-                    int id = (int) filiereDAO.save(filiere);
-                    filiere.setId(id);
-                    adapter.add(filiere);
-                    showToast( "filière ajoutée avec succés", Toast.LENGTH_LONG);
-                });
-        builder.show();
+                    if( f == null ){
+                        Filiere filiere = new Filiere(null, intitule);
+                        int id = (int) filiereDAO.save(filiere);
+                        filiere.setId(id);
+                        adapter.add(filiere);
+                    } else {
+                        f.setIntitule(intitule);
+                        filiereDAO.update(f, f.getId());
+                    }
+                    showToast("filière enregistrée avec succés", Toast.LENGTH_LONG);
+                }).show();
     }
 
-    private void supprimerFiliereDialog(Filiere filiere) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Formulaire de suppression");
-        builder.setMessage("Voulez-vous supprimer cette filiere :\n" + filiere.toString());
-        builder.setNeutralButton("Annuler", (dialog, which) -> dialog.cancel());
-        builder.setPositiveButton("Supprimer", (dialog, which) -> {
-            filiereDAO.deleteById(filiere.getId());
-            adapter.remove(filiere);
-            showToast("La filiere a été supprimée avec succés", Toast.LENGTH_LONG);
-        });
-        builder.show();
+    private void confirmDialog(Filiere filiere) {
+        new AlertDialog.Builder(this)
+                .setTitle("Formulaire de suppression")
+                .setMessage("Voulez-vous supprimer cette filiere :\n" + filiere.toString())
+                .setNeutralButton("Annuler", (dialog, which) -> dialog.cancel())
+                .setPositiveButton("Supprimer", (dialog, which) -> {
+                    filiereDAO.deleteById(filiere.getId());
+                    adapter.remove(filiere);
+                    showToast("La filiere a été supprimée avec succés", Toast.LENGTH_LONG);
+                }).show();
     }
 
-    private void showToast(String message, int length){
-        Toast.makeText(this, message,length).show();
+    private void showToast(String message, int length) {
+        Toast.makeText(this, message, length).show();
     }
 }
