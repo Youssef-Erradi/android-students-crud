@@ -60,7 +60,7 @@ public class FiliereDAO implements IDAO<Filiere> {
     }
 
     @Override
-    public void save(Filiere filiere, Integer id) {
+    public void update(Filiere filiere, Integer id) {
         ContentValues values = new ContentValues();
         values.put(sqlite.COL_FILIERES_INTITULE, filiere.getIntitule());
         sqlite.getWritableDatabase().update(sqlite.TABLE_FILIERES, values, "id=?", new String[]{id+""});

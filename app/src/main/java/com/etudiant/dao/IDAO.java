@@ -7,5 +7,5 @@ public interface IDAO<T> {
     public T getById(Integer id);
     public void deleteById(Integer id);
     public long save(T t);
-    public void save(T t, Integer id);
+    public void update(T t, Integer id);
 }
