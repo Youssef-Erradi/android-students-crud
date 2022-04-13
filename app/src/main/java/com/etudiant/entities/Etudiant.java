@@ -12,17 +12,19 @@ public class Etudiant implements Serializable {
     private LocalDate dateNaissance;
     private String ville;
     private Bitmap photo;
+    private Filiere filiere;
 
     public Etudiant() {
     }
 
-    public Etudiant(Integer id, String nom, String prenom, LocalDate dateNaissance, String ville, Bitmap photo) {
+    public Etudiant(Integer id, String nom, String prenom, LocalDate dateNaissance, String ville, Bitmap photo, Filiere filiere) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.dateNaissance = dateNaissance;
         this.ville = ville;
         this.photo = photo;
+        this.filiere = filiere;
     }
 
     public Integer getId() {
@@ -71,6 +73,14 @@ public class Etudiant implements Serializable {
 
     public void setPhoto(Bitmap photo) {
         this.photo = photo;
+    }
+
+    public Filiere getFiliere() {
+        return filiere;
+    }
+
+    public void setFiliere(Filiere filiere) {
+        this.filiere = filiere;
     }
 
     @Override
