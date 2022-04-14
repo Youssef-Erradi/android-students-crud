@@ -13,6 +13,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
     public static final String COL_ETUDIANTS_ID = "Id";
     public static final String COL_ETUDIANTS_NOM = "Nom";
     public static final String COL_ETUDIANTS_PRENOM = "Prenom";
+    public static final String COL_ETUDIANTS_DATE = "Date";
     public static final String COL_ETUDIANTS_VILLE = "Ville";
     public static final String COL_ETUDIANTS_PHOTO = "Photo";
     public static final String COL_ETUDIANTS_FILIERE = "Id_Filiere";
@@ -27,6 +28,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
             + COL_ETUDIANTS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COL_ETUDIANTS_NOM + " TEXT NOT NULL, "
             + COL_ETUDIANTS_PRENOM + " TEXT NOT NULL, "
+            + COL_ETUDIANTS_DATE + " TEXT NOT NULL, "
             + COL_ETUDIANTS_PHOTO + " BLOB NOT NULL, "
             + COL_ETUDIANTS_VILLE + " TEXT NOT NULL,"
             + COL_ETUDIANTS_FILIERE + " INTEGER NOT NULL,"
