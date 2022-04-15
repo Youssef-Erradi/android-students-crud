@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    private Button btnAjouter;
+    private Button btnAjouter, btnEtudiant;
     private ListView listView;
     private ArrayAdapter<Filiere> adapter;
     private final FiliereDAO filiereDAO = new FiliereDAO(this);
@@ -39,10 +39,15 @@ public class MainActivity extends AppCompatActivity {
             Filiere filiere = adapter.getItem(pos);
             formDialog(filiere);
         });
+        btnEtudiant.setOnClickListener(v->{
+            getIntent().setClass(this, EtudiantActivity.class);
+            startActivity(getIntent());
+        });
     }
 
     private void initViews() {
         btnAjouter = findViewById(R.id.btnAjouter);
+        btnEtudiant = findViewById(R.id.btnEtudiant);
         listView = findViewById(R.id.listView);
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, filiereDAO.findAll());
         listView.setAdapter(adapter);
