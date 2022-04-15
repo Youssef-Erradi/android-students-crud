@@ -6,12 +6,26 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btnAjouter"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="7sp"
-        android:text="Ajouter une filière" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnAjouter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="7sp"
+            android:text="Ajouter une filière" />
+
+        <Button
+            android:id="@+id/btnEtudiant"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="7sp"
+            android:text="Gestion des etudiants" />
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/listView"
