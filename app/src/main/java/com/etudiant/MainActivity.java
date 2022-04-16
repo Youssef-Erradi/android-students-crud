@@ -39,8 +39,9 @@ public class MainActivity extends AppCompatActivity {
             Filiere filiere = adapter.getItem(pos);
             formDialog(filiere);
         });
-        btnEtudiant.setOnClickListener(v->{
+        btnEtudiant.setOnClickListener(v -> {
             getIntent().setClass(this, EtudiantActivity.class);
+            finish();
             startActivity(getIntent());
         });
     }
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                         showToast("Remplissez le champ intitulé d'abord", Toast.LENGTH_SHORT);
                         return;
                     }
-                    if( f == null ){
+                    if (f == null) {
                         Filiere filiere = new Filiere(null, intitule);
                         int id = (int) filiereDAO.save(filiere);
                         filiere.setId(id);
