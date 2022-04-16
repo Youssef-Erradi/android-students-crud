@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GestionDesEtudiants">
         <activity
+            android:name=".EtudiantFormActivity"
+            android:exported="false" />
+        <activity
             android:name=".EtudiantActivity"
             android:exported="false" />
         <activity
