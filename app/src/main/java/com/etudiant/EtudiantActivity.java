@@ -15,7 +15,7 @@ import com.etudiant.entities.Filiere;
 public class EtudiantActivity extends AppCompatActivity {
     private Button btnAjouter, btnFiliere;
     private ListView listView;
-    private ArrayAdapter<Etudiant> adapter;
+    private EtudiantAdapter adapter;
     private final EtudiantDAO etudiantDAO = new EtudiantDAO(this);
 
     @Override
@@ -26,6 +26,7 @@ public class EtudiantActivity extends AppCompatActivity {
 
         btnAjouter.setOnClickListener(v -> {
             getIntent().setClass(this, EtudiantFormActivity.class);
+            finish();
             startActivity(getIntent());
         });
         btnFiliere.setOnClickListener(v -> {
@@ -39,7 +40,7 @@ public class EtudiantActivity extends AppCompatActivity {
         btnAjouter = findViewById(R.id.btnAjouter);
         btnFiliere = findViewById(R.id.btnFiliere);
         listView = findViewById(R.id.listView);
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, etudiantDAO.findAll());
+        adapter = new EtudiantAdapter(this, etudiantDAO.findAll());
         listView.setAdapter(adapter);
     }
 }

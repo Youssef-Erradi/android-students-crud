@@ -15,18 +15,22 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.etudiant.dao.EtudiantDAO;
 import com.etudiant.dao.FiliereDAO;
+import com.etudiant.entities.Etudiant;
 import com.etudiant.entities.Filiere;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class EtudiantFormActivity extends AppCompatActivity {
     private EditText txtId, txtNom, txtPrenom, txtDateNaissance, txtVille;
     private ImageView imageView;
     private Bitmap photo;
-    private Button upload;
+    private Button upload, submit;
     private Spinner spinner;
     private final FiliereDAO filiereDAO = new FiliereDAO(this);
+    private final EtudiantDAO etudiantDAO = new EtudiantDAO(this);
     private ArrayAdapter<Filiere> adapter;
 
     @Override
@@ -40,10 +44,33 @@ public class EtudiantFormActivity extends AppCompatActivity {
             photoPickerIntent.setType("image/*");
             startActivityForResult(photoPickerIntent ,1);
         });
+
+        submit.setOnClickListener(v ->{
+            String nom = txtNom.getText().toString().trim(),
+                    prenom = txtPrenom.getText().toString().trim(),
+                    ville = txtVille.getText().toString().trim();
+            Filiere filiere = (Filiere) spinner.getSelectedItem();
+            try{
+                LocalDate dateNaissance = LocalDate.parse(txtDateNaissance.getText().toString());
+                Etudiant etudiant = new Etudiant(null,nom,prenom,dateNaissance,ville, photo, filiere);
+                etudiantDAO.save(etudiant);
+                getIntent().setClass(this, EtudiantActivity.class);
+                finish();
+                startActivity(getIntent());
+                showToast("Etudiant enregistré avec succés", Toast.LENGTH_SHORT);
+            }catch(Exception exception){
+                showToast(exception.getMessage(), Toast.LENGTH_SHORT);
+            }
+        });
+    }
+
+    private void showToast(String message, int length) {
+        Toast.makeText(this, message, length).show();
     }
 
     private void initViews() {
         txtId = findViewById(R.id.txtId);
+        txtId.setEnabled(false);
         txtNom = findViewById(R.id.txtNom);
         txtPrenom = findViewById(R.id.txtPrenom);
         txtDateNaissance = findViewById(R.id.txtDate);
@@ -53,6 +80,8 @@ public class EtudiantFormActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
         upload = findViewById(R.id.upload);
         imageView = findViewById(R.id.photo);
+        submit = findViewById(R.id.submit);
+        submit.setEnabled(false);
     }
 
     @Override
@@ -60,8 +89,8 @@ public class EtudiantFormActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1)
             if (resultCode == RESULT_OK) {
-                Bitmap photo = null;
                 try {
+                    submit.setEnabled(true);
                     photo = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
                     imageView.setImageBitmap(photo);
                 } catch (IOException e) {
