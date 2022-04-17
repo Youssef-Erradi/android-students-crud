@@ -30,12 +30,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textSize="15sp"
                 android:minHeight="40sp" />
 
             <TextView
                 android:id="@+id/ville"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="15sp"
                 android:layout_weight="1"
                 android:minHeight="40sp" />
         </LinearLayout>
@@ -52,6 +54,7 @@
                 android:id="@+id/dateNaissance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="15sp"
                 android:layout_weight="1"
                 android:minHeight="40sp" />
 
@@ -60,6 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textSize="15sp"
                 android:minHeight="40sp" />
         </LinearLayout>
     </LinearLayout>

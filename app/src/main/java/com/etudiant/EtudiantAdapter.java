@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.etudiant.entities.Etudiant;
 
 import java.util.List;
@@ -28,6 +30,12 @@ public class EtudiantAdapter extends ArrayAdapter<Etudiant> {
         return etudiants.size();
     }
 
+    @Nullable
+    @Override
+    public Etudiant getItem(int position) {
+        return etudiants.get(position);
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
@@ -36,11 +44,11 @@ public class EtudiantAdapter extends ArrayAdapter<Etudiant> {
             convertView = inflater.inflate(R.layout.row, parent, false);
 
             holder = new ViewHolder();
-            holder.nom = (TextView) convertView.findViewById(R.id.nomComplet);
-            holder.ville = (TextView) convertView.findViewById(R.id.ville);
-            holder.age = (TextView) convertView.findViewById(R.id.dateNaissance);
-            holder.filiere = (TextView) convertView.findViewById(R.id.filiere);
-            holder.image = (ImageView) convertView.findViewById(R.id.img);
+            holder.nom = convertView.findViewById(R.id.nomComplet);
+            holder.ville = convertView.findViewById(R.id.ville);
+            holder.age = convertView.findViewById(R.id.dateNaissance);
+            holder.filiere = convertView.findViewById(R.id.filiere);
+            holder.image = convertView.findViewById(R.id.img);
 
             convertView.setTag(holder);
         } else

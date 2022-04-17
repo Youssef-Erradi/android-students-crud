@@ -44,25 +44,32 @@
         android:hint="yyyy-MM-dd, ex : 2000-03-20" />
 
     <Spinner
+        android:id="@+id/filiereSpn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10sp"
-        android:id="@+id/filiereSpn"/>
+        android:layout_marginBottom="10sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <ImageView
+            android:id="@+id/photo"
             android:layout_width="wrap_content"
             android:layout_height="150sp"
-            android:layout_marginBottom="10sp"
-            android:id="@+id/photo"/>
+            android:layout_marginBottom="10sp" />
+
         <Button
+            android:id="@+id/upload"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Upload Photo"
-            android:id="@+id/upload"/>
+            android:text="Upload Photo" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enregistrer Etudiant" />
 </LinearLayout>
