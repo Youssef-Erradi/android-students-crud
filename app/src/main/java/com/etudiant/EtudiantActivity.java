@@ -24,6 +24,10 @@ public class EtudiantActivity extends AppCompatActivity {
         setContentView(R.layout.activity_etudiant);
         initViews();
 
+        btnAjouter.setOnClickListener(v -> {
+            getIntent().setClass(this, EtudiantFormActivity.class);
+            startActivity(getIntent());
+        });
         btnFiliere.setOnClickListener(v -> {
             getIntent().setClass(this, MainActivity.class);
             finish();
