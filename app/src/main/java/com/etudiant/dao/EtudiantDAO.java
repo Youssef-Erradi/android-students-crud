@@ -3,6 +3,7 @@ package com.etudiant.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -31,12 +32,12 @@ public class EtudiantDAO implements IDAO<Etudiant> {
         String sql = "SELECT * FROM "+sqlite.TABLE_ETUDIANTS;
         Cursor cursor = sqlite.getReadableDatabase().rawQuery(sql, null);
         while (cursor.moveToNext()) {
-            Bitmap photo = BitmapFactory.decodeByteArray(cursor.getBlob(5), 0, cursor.getBlob(5).length);
+            Bitmap photo = BitmapFactory.decodeByteArray(cursor.getBlob(4), 0, cursor.getBlob(4).length);
             LocalDate date = LocalDate.parse(cursor.getString(3));
             Filiere filiere = filiereDAO.getById(cursor.getInt(6));
             etudiants.add(
                     new Etudiant(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
-                            date, cursor.getString(4), photo, filiere)
+                            date, cursor.getString(5), photo, filiere)
             );
         }
         return etudiants;
@@ -66,7 +67,6 @@ public class EtudiantDAO implements IDAO<Etudiant> {
     public long save(Etudiant etudiant) {
         long id = -1;
         ContentValues values = new ContentValues();
-        values.put(sqlite.COL_ETUDIANTS_ID, etudiant.getId());
         values.put(sqlite.COL_ETUDIANTS_NOM, etudiant.getNom());
         values.put(sqlite.COL_ETUDIANTS_PRENOM, etudiant.getPrenom());
         values.put(sqlite.COL_ETUDIANTS_DATE, etudiant.getDateNaissance().toString());
@@ -74,9 +74,9 @@ public class EtudiantDAO implements IDAO<Etudiant> {
         values.put(sqlite.COL_ETUDIANTS_PHOTO, getBitmapAsByteArray(etudiant.getPhoto()));
         values.put(sqlite.COL_ETUDIANTS_FILIERE, etudiant.getFiliere().getId());
         try {
-            id = sqlite.getWritableDatabase().insert(sqlite.TABLE_ETUDIANTS, null, values);
-        } catch (SQLiteException ex) {
-            Log.e("SQLiteException", ex.getMessage());
+            id = sqlite.getWritableDatabase().insertOrThrow(sqlite.TABLE_ETUDIANTS, "", values);
+        } catch (SQLException ex) {
+            Log.e("Exception", ex.getMessage());
         }
         return id;
     }

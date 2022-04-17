@@ -13,7 +13,7 @@ public class SQLiteDB extends SQLiteOpenHelper {
     public static final String COL_ETUDIANTS_ID = "Id";
     public static final String COL_ETUDIANTS_NOM = "Nom";
     public static final String COL_ETUDIANTS_PRENOM = "Prenom";
-    public static final String COL_ETUDIANTS_DATE = "Date";
+    public static final String COL_ETUDIANTS_DATE = "DateNaissance";
     public static final String COL_ETUDIANTS_VILLE = "Ville";
     public static final String COL_ETUDIANTS_PHOTO = "Photo";
     public static final String COL_ETUDIANTS_FILIERE = "Id_Filiere";
@@ -53,8 +53,8 @@ public class SQLiteDB extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL(SQL_DELETE_TABLE_FILIERES);
         db.execSQL(SQL_DELETE_TABLE_ETUDIANTS);
+        db.execSQL(SQL_DELETE_TABLE_FILIERES);
         onCreate(db);
     }
 }
