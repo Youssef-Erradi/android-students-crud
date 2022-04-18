@@ -41,6 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10sp"
+        android:inputType="date"
         android:hint="yyyy-MM-dd, ex : 2000-03-20" />
 
     <Spinner

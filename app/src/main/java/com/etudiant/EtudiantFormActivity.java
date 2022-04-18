@@ -39,21 +39,37 @@ public class EtudiantFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_etudiant_form);
         initViews();
 
+        if(getIntent().getExtras() != null){
+           Integer id = (Integer) getIntent().getExtras().get("etudiant");
+           Etudiant e = etudiantDAO.getById(id);
+           txtId.setText(e.getId().toString());
+           txtNom.setText(e.getNom());
+           txtPrenom.setText(e.getPrenom());
+           txtDateNaissance.setText(e.getDateNaissance().toString());
+           txtVille.setText(e.getVille());
+           photo = e.getPhoto();
+           imageView.setImageBitmap(photo);
+           spinner.setSelection(adapter.getPosition(e.getFiliere()));
+        }
+
         upload.setOnClickListener(v -> {
             Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
             photoPickerIntent.setType("image/*");
             startActivityForResult(photoPickerIntent ,1);
         });
-
         submit.setOnClickListener(v ->{
             String nom = txtNom.getText().toString().trim(),
                     prenom = txtPrenom.getText().toString().trim(),
                     ville = txtVille.getText().toString().trim();
             Filiere filiere = (Filiere) spinner.getSelectedItem();
+            Integer id = null;
             try{
                 LocalDate dateNaissance = LocalDate.parse(txtDateNaissance.getText().toString());
                 Etudiant etudiant = new Etudiant(null,nom,prenom,dateNaissance,ville, photo, filiere);
-                etudiantDAO.save(etudiant);
+                if(txtId.getText().toString().trim().isEmpty())
+                    etudiantDAO.save(etudiant);
+                else
+                    etudiantDAO.update(etudiant, Integer.valueOf(txtId.getText().toString().trim()));
                 getIntent().setClass(this, EtudiantActivity.class);
                 finish();
                 startActivity(getIntent());
@@ -81,7 +97,6 @@ public class EtudiantFormActivity extends AppCompatActivity {
         upload = findViewById(R.id.upload);
         imageView = findViewById(R.id.photo);
         submit = findViewById(R.id.submit);
-        submit.setEnabled(false);
     }
 
     @Override
@@ -90,7 +105,6 @@ public class EtudiantFormActivity extends AppCompatActivity {
         if (requestCode == 1)
             if (resultCode == RESULT_OK) {
                 try {
-                    submit.setEnabled(true);
                     photo = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
                     imageView.setImageBitmap(photo);
                 } catch (IOException e) {
