@@ -37,6 +37,12 @@ public class EtudiantAdapter extends ArrayAdapter<Etudiant> {
     }
 
     @Override
+    public void remove(Etudiant object) {
+        etudiants.remove(object);
+        notifyDataSetChanged();
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
