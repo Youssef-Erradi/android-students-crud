@@ -49,11 +49,11 @@ public class EtudiantDAO implements IDAO<Etudiant> {
         String sql = "SELECT * FROM "+sqlite.TABLE_ETUDIANTS + " WHERE id="+id;
         Cursor cursor = sqlite.getReadableDatabase().rawQuery(sql, null);
         if (cursor.moveToNext()) {
-            Bitmap photo = BitmapFactory.decodeByteArray(cursor.getBlob(5), 0, cursor.getBlob(5).length);
+            Bitmap photo = BitmapFactory.decodeByteArray(cursor.getBlob(4), 0, cursor.getBlob(4).length);
             LocalDate date = LocalDate.parse(cursor.getString(3));
             Filiere filiere = filiereDAO.getById(cursor.getInt(6));
             etudiant = new Etudiant(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
-                            date, cursor.getString(4), photo, filiere);
+                            date, cursor.getString(5), photo, filiere);
         }
         return etudiant;
     }
