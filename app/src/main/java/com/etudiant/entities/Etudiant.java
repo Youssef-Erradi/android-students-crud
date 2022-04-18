@@ -88,12 +88,12 @@ public class Etudiant implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Etudiant etudiant = (Etudiant) o;
-        return Objects.equals(id, etudiant.id) && Objects.equals(nom, etudiant.nom) && Objects.equals(prenom, etudiant.prenom) && Objects.equals(dateNaissance, etudiant.dateNaissance) && Objects.equals(ville, etudiant.ville) && Objects.equals(photo, etudiant.photo);
+        return Objects.equals(id, etudiant.id) && Objects.equals(nom, etudiant.nom) && Objects.equals(prenom, etudiant.prenom) && Objects.equals(dateNaissance, etudiant.dateNaissance) && Objects.equals(ville, etudiant.ville) && Objects.equals(photo, etudiant.photo) && Objects.equals(filiere, etudiant.filiere);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nom, prenom, dateNaissance, ville, photo);
+        return Objects.hash(id, nom, prenom, dateNaissance, ville, photo, filiere);
     }
 
     @Override
@@ -103,8 +103,6 @@ public class Etudiant implements Serializable {
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", dateNaissance=" + dateNaissance +
-                ", ville='" + ville + '\'' +
-                ", photo=" + photo +
-                '}';
+                ", ville='" + ville + '\'' + '}';
     }
 }
